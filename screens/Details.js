@@ -26,6 +26,7 @@ const DetailsHeader = ({ data, navigation }) => {
           size={32} 
         />
       </View>
+      
     </SafeAreaView>
   )
 };
