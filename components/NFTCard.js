@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS, SIZES, SHADOWS } from "../constants"
 import { RectButton, LikeButton } from './Button'
 import { SubInfo, EthPrice, NFTTitle } from './SubInfo'
+import { Pressable } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const NFTCard = ({ data }) => {
+
+const NFTCard = ({ data, addToLike, liked }) => {
     const navigation = useNavigation();
 
     return (
@@ -27,7 +30,14 @@ const NFTCard = ({ data }) => {
                         borderTopRightRadius: SIZES.font,
                     }}
                 />
-                <LikeButton right={10} top={10} size={32}/>
+                {/* <LikeButton right={10} top={10} size={32} /> */}
+                <Pressable onPress={addToLike} style={{ position:'absolute' }} right={10} top={10} >
+                    <MaterialCommunityIcons
+                        name={liked ? "heart" : "heart-outline"}
+                        size={32}
+                        color={liked ? "red" : "black"}
+                    />
+                </Pressable>
             </View>
 
             <SubInfo />

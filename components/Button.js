@@ -48,9 +48,16 @@ export const RectButton = ({ minWidth, fontSize, handlePress, ...props }) => {
 
 export const LikeButton = ({ onPress, size, ...props }) => {
     const [liked, setLiked] = useState(false);
-
+    const fav = () => {
+        if(!liked){
+            setLiked(true)
+            
+        }else{
+            setLiked(false)
+        }
+    }
     return (
-        <Pressable onPress={() => setLiked((isLiked) => !isLiked)} style={{ position: "absolute", ...props }} >
+        <Pressable onPress={() => fav()} style={{ position: "absolute", ...props }} >
             <MaterialCommunityIcons
                 name={liked ? "heart" : "heart-outline"}
                 size={size}

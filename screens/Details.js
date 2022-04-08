@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, SafeAreaView, Image, StatusBar, FlatList } from "react-native";
 import { COLORS, SIZES, assets, SHADOWS, FONTS } from "../constants";
 import { SubInfo, DetailsDesc, DetailsBid, FocusedStatusBar } from "../components";
@@ -20,13 +20,13 @@ const DetailsHeader = ({ data, navigation }) => {
           left={15}
           top={StatusBar.currentHeight + 10}
         />
+        
         <LikeButton 
           right={15}
           top={StatusBar.currentHeight + 10} 
           size={32} 
         />
       </View>
-      
     </SafeAreaView>
   )
 };

@@ -5,18 +5,13 @@ import { useFonts } from 'expo-font';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from './screens/Home';
 import Details from './screens/Details';
+import Like from './screens/Like';
 import { Text, View } from 'react-native';
-
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+import { LikeProvider } from './components/LikeContext';
 
-function Like() {
-  return (
-    <View>
-      <Text>Like Page</Text>
-    </View>
-  )
-}
+
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -52,7 +47,7 @@ const App = () => {
   if (!loaded) return null;
   return (
     <NavigationContainer theme={theme}>
-      {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home"> */}
+    <LikeProvider>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="HomeStack" component={HomeStack} options={{
           tabBarLabel: 'Home',
@@ -66,7 +61,7 @@ const App = () => {
           ),
         }} />
       </Tab.Navigator>
-      {/* </Stack.Navigator> */}
+      </LikeProvider>
     </NavigationContainer>
   );
 }
