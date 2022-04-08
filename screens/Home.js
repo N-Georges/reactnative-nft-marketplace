@@ -50,9 +50,6 @@ const Home = () => {
         //Otherwise add the item to the end of the array
         updatedLikeItems = [...oldValues, { e, count: 1 }]
       }
-
-
-
       return updatedLikeItems
     })
   }

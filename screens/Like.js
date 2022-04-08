@@ -15,8 +15,8 @@ const Like = () => {
         <View style={{ zIndex: 0 }}>
           <FlatList
             data={contextValueLike}
-            renderItem={({ item, index }) => <NFTCard  data={item.e} style={{ height: 100 }} />}
-            keyExtractor={(index) => index.id}
+            renderItem={({ item }) => <NFTCard data={item.e} style={{ height: 100 }} />}
+            keyExtractor={(item) => item.e.id}
             showsVerticalScrollIndicator={false}
           />
         </View>
