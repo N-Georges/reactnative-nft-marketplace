@@ -26,6 +26,7 @@ const DetailsHeader = ({ data, navigation }) => {
           top={StatusBar.currentHeight + 10} 
           size={32} 
         />
+        
       </View>
     </SafeAreaView>
   )

@@ -5,7 +5,7 @@ import { NFTCard, HomeHeader, FocusedStatusBar } from "../components"
 import { LikeContext } from '../components/LikeContext';
 
 
-const Home = () => {
+const Home = ({...props}) => {
   const [nftData, setNftData] = useState(NFTData)
 
   const handleSearch = (value) => {
@@ -24,19 +24,50 @@ const Home = () => {
       setNftData(filteredData);
     }
   };
+// define state variable to store favorite items
+const [favoriteList, setFavoriteList] = useState([]);
+
+// function to add an item to favorite list
+const onFavorite = restaurant => {
+  setFavoriteList([...favoriteList, restaurant]);
+};
+
+// function to remove an item from favorite list
+const onRemoveFavorite = restaurant => {
+  const filteredList = favoriteList.filter(
+    item => item.id !== restaurant.id
+  );
+  setFavoriteList(filteredList);
+};
+
+// function to check if an item exists in the favorite list or not
+const ifExists = (restaurant) => {
+  if (favoriteList.filter(item => item.id === restaurant.id).length > 0) {
+    return true;
+  }
+  return false;
+};
 
   // like context
   const [contextValueLike, setContextLike] = useContext(LikeContext)
+  const [liked, setLiked] = useState(false);
+
   console.log(contextValueLike);
+  console.log(liked);
   const addToLike = (e) => {
+    if(!liked){
+      setLiked(true)
+      
+  }else{
+      setLiked(false)
+  }
     setContextLike(oldValues => {
       const productIndex = oldValues.findIndex(
         val => val.e === e
       )
-
       let updatedLikeItems = []
 
-      // If the product already exists in cart, then update the quantity
+      // Si le produit existe déjà dans le panier, alors mettez à jour la quantité
       if (productIndex !== -1) {
         updatedLikeItems = [
           ...oldValues.slice(0, productIndex),
@@ -47,8 +78,9 @@ const Home = () => {
           ...oldValues.slice(productIndex + 1),
         ]
       } else {
-        //Otherwise add the item to the end of the array
+        //Sinon, ajoutez l'élément à la fin du tableau
         updatedLikeItems = [...oldValues, { e, count: 1 }]
+
       }
       return updatedLikeItems
     })
@@ -61,7 +93,7 @@ const Home = () => {
         <View style={{ zIndex: 0 }}>
           <FlatList
             data={nftData}
-            renderItem={({ item }) => <NFTCard data={item} addToLike={() => addToLike(item)} />}
+            renderItem={({ item }) => <NFTCard data={item} addToLike={() => addToLike(item)}  />}
 
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}

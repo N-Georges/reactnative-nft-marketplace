@@ -2,7 +2,8 @@ import { Text, TouchableOpacity, Image } from 'react-native'
 import { COLORS, SIZES, SHADOWS, FONTS } from "../constants"
 import { Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { LikeContext } from "../components/LikeContext"
 
 export const CircleButton = ({ imgUrl, handlePress, ...props }) => {
     return (
@@ -48,9 +49,13 @@ export const RectButton = ({ minWidth, fontSize, handlePress, ...props }) => {
 
 export const LikeButton = ({ onPress, size, ...props }) => {
     const [liked, setLiked] = useState(false);
-    const fav = () => {
+    const [contextValueLike, setContextLike] = useContext(LikeContext)
+
+    const fav = (e) => {
+
         if(!liked){
             setLiked(true)
+            console.log(e)
             
         }else{
             setLiked(false)

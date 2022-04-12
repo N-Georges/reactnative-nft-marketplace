@@ -67,3 +67,10 @@ const App = () => {
 }
 
 export default App;
+
+
+
+// updatedLikeItems = [...oldValues, e] 
+//       const uniqueSet = new Set(updatedLikeItems) 
+//       updatedLikeItems = [...uniqueSet]
+//       return updatedLikeItems

@@ -6,7 +6,6 @@ import { LikeContext } from "../components/LikeContext"
 
 const Like = () => {
   const [contextValueLike, setContextLike] = useContext(LikeContext)
-    console.log(contextValueLike);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
