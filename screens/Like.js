@@ -1,11 +1,12 @@
-import { useState, useContext } from "react"
 import { View, SafeAreaView, FlatList } from "react-native"
-import { COLORS, NFTData } from "../constants"
-import { NFTCard, HomeHeader, FocusedStatusBar } from "../components"
-import { LikeContext } from "../components/LikeContext"
+import { COLORS } from "../constants"
+import { NFTCard, FocusedStatusBar } from "../components"
+import { useSelector } from "react-redux"
+
 
 const Like = () => {
-  const [contextValueLike, setContextLike] = useContext(LikeContext)
+  const likeItems = useSelector(state => state.like.itemsList)
+  console.log(likeItems);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
@@ -13,9 +14,17 @@ const Like = () => {
       <View style={{ flex: 1 }}>
         <View style={{ zIndex: 0 }}>
           <FlatList
-            data={contextValueLike}
-            renderItem={({ item }) => <NFTCard data={item.e} style={{ height: 100 }} />}
-            keyExtractor={(item) => item.e.id}
+            data={likeItems}
+            
+            renderItem={({ item }) => <NFTCard 
+                id={item.id}
+                image={item.image}
+                name={item.name}
+                price={item.price}
+                creator={item.creator}
+              style={{ height: 100 }} />}
+              
+            keyExtractor={(index) => index.id}
             showsVerticalScrollIndicator={false}
           />
         </View>

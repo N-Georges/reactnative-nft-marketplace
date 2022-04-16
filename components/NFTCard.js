@@ -1,4 +1,4 @@
-import React, { useState, useContext  } from "react";
+import React from "react";
 import { View, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { COLORS, SIZES, SHADOWS } from "../constants"
@@ -6,13 +6,24 @@ import { RectButton, LikeButton } from './Button'
 import { SubInfo, EthPrice, NFTTitle } from './SubInfo'
 import { Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { LikeContext } from "../components/LikeContext"
+import { useDispatch, useSelector } from "react-redux";
+import { likeActions } from '../store/like-slice';
 
 
-const NFTCard = ({ data, addToLike, liked }) => {
-    const [contextValueLike, setContextLike] = useContext(LikeContext)
+const NFTCard = ({ image, name, price, creator, id }) => {
+
+    const liked = useSelector(state => state.like.liked)
+    const dispatch = useDispatch();
+    const addToLike = () => {
+        dispatch(likeActions.addToLike({
+            id,
+            image,
+            price,
+            creator,
+            name,
+        }))
+    }
     const navigation = useNavigation();
-
     return (
         <View style={{
             backgroundColor: COLORS.white,
@@ -23,7 +34,7 @@ const NFTCard = ({ data, addToLike, liked }) => {
         }}>
             <View style={{ width: "100%", height: 250, position: "relative" }}>
                 <Image
-                    source={data.image}
+                    source={{ uri: 'https://img.phonandroid.com/2021/11/bitcoin-record.jpg' }}
                     resizeMode="cover"
                     style={{
                         width: "100%",
@@ -32,32 +43,30 @@ const NFTCard = ({ data, addToLike, liked }) => {
                         borderTopRightRadius: SIZES.font,
                     }}
                 />
-                {/* <LikeButton onPress={addToLike} right={10} top={10} size={32} /> */}
-                <Pressable onPress={addToLike}  style={{ position:'absolute' }} right={10} top={10} >
+                
+                <Pressable onPress={() => addToLike()} style={{ position: "absolute" }} right={10} top={10}>
                     <MaterialCommunityIcons
                         name={liked ? "heart" : "heart-outline"}
                         size={32}
                         color={liked ? "red" : "black"}
                     />
-                    
                 </Pressable>
+
             </View>
 
             <SubInfo />
             <View style={{ width: "100%", padding: SIZES.font }}>
                 <NFTTitle
-                    title={data.name}
-                    subTitle={data.creator}
-                    titleSize={SIZES.large}
-                    subTitleSize={SIZES.small}
+                    name={name}
+                    creator={creator}
                 />
 
                 <View style={{ marginTop: SIZES.font, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    <EthPrice price={data.price} />
+                    <EthPrice price={price} />
                     <RectButton
                         minWidth={120}
                         fontSize={SIZES.font}
-                        handlePress={() => navigation.navigate("Details", { data })}
+                    // handlePress={() => navigation.navigate("Details", { data })}
                     />
                 </View>
             </View>

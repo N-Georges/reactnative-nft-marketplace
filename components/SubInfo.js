@@ -2,11 +2,11 @@ import { View, Text, Image } from 'react-native'
 import { COLORS, SIZES, SHADOWS, assets, FONTS } from "../constants"
 
 
-export const NFTTitle = ({ title, subTitle, titleSize, subTitleSize }) => {
+export const NFTTitle = ({ name, creator}) => {
     return (
         <View>
-            <Text style={{ fontFamily: FONTS.semiBold, fontSize: titleSize, color: COLORS.primary }}>{title}</Text>
-            <Text style={{ fontFamily: FONTS.regular, fontSize: subTitleSize, color: COLORS.primary }}>{subTitle}</Text>
+            <Text style={{ fontFamily: FONTS.semiBold, fontSize: SIZES.large, color: COLORS.primary }}>{name}</Text>
+            <Text style={{ fontFamily: FONTS.regular, fontSize: SIZES.font, color: COLORS.primary }}>{creator}</Text>
         </View>
     )
 }

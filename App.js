@@ -6,12 +6,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from './screens/Home';
 import Details from './screens/Details';
 import Like from './screens/Like';
-import { Text, View } from 'react-native';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-import { LikeProvider } from './components/LikeContext';
-
-
+import { Provider } from 'react-redux';
+import store from "./store"
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -23,14 +21,14 @@ const theme = {
 function HomeStack() {
   return (
     <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName="Home"
-      >
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Details" component={Details} />
-      </Stack.Navigator>
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName="Home"
+    >
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Details" component={Details} />
+    </Stack.Navigator>
   );
 }
 
@@ -46,31 +44,24 @@ const App = () => {
 
   if (!loaded) return null;
   return (
-    <NavigationContainer theme={theme}>
-    <LikeProvider>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="HomeStack" component={HomeStack} options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }} />
-        <Tab.Screen name="Like" component={Like} options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="heart" color={color} size={size} />
-          ),
-        }} />
-      </Tab.Navigator>
-      </LikeProvider>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer theme={theme}>
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
+          <Tab.Screen name="HomeStack" component={HomeStack} options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }} />
+          <Tab.Screen name="Like" component={Like} options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="heart" color={color} size={size} />
+            ),
+          }} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
 export default App;
-
-
-
-// updatedLikeItems = [...oldValues, e] 
-//       const uniqueSet = new Set(updatedLikeItems) 
-//       updatedLikeItems = [...uniqueSet]
-//       return updatedLikeItems

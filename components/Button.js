@@ -2,8 +2,9 @@ import { Text, TouchableOpacity, Image } from 'react-native'
 import { COLORS, SIZES, SHADOWS, FONTS } from "../constants"
 import { Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState, useContext } from 'react';
-import { LikeContext } from "../components/LikeContext"
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { likeActions } from '../store/like-slice';
 
 export const CircleButton = ({ imgUrl, handlePress, ...props }) => {
     return (
@@ -47,22 +48,31 @@ export const RectButton = ({ minWidth, fontSize, handlePress, ...props }) => {
     )
 }
 
-export const LikeButton = ({ onPress, size, ...props }) => {
-    const [liked, setLiked] = useState(false);
-    const [contextValueLike, setContextLike] = useContext(LikeContext)
-
-    const fav = (e) => {
-
-        if(!liked){
-            setLiked(true)
-            console.log(e)
-            
-        }else{
-            setLiked(false)
-        }
+export const LikeButton = ({ onPress, image, id, price, creator, size, ...props }) => {
+    const liked = useSelector(state => state.like.liked)
+    const dispatch = useDispatch();
+    const addToLike = () => {
+        dispatch(likeActions.addToLike({
+            image,
+            id,
+            price,
+            creator
+        }))
     }
+    // const [liked, setLiked] = useState(false);
+
+    // const fav = (e) => {
+
+    //     if(!liked){
+    //         setLiked(true)
+    //         console.log(e)
+            
+    //     }else{
+    //         setLiked(false)
+    //     }
+    // }
     return (
-        <Pressable onPress={() => fav()} style={{ position: "absolute", ...props }} >
+        <Pressable onPress={addToLike} style={{ position: "absolute", ...props }} >
             <MaterialCommunityIcons
                 name={liked ? "heart" : "heart-outline"}
                 size={size}
